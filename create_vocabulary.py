@@ -2,6 +2,27 @@ from classes import Kanji, Word
 import csv
 
 
+'''
+    JAPANESE VOCABULARY TOOL
+
+    To use:
+    1. Create a Kanji.csv file with the following fields
+        - sequence
+        - kanji
+        - meaning
+        - status
+    2. Create a Vocabulary.csv file with the following fields
+        - kana
+        - kanji
+        - english
+        - category
+        - status
+    3. Execute create_vocabulary.py
+    4. Open New_Vocabulary.csv for the vocabulary with updated statuses
+    5. Open Kanji_Needing_Words.csv for the kanji that you need to learn a word
+'''
+
+
 kanji_list = []
 vocabulary_list = []
 
