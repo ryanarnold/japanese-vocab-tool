@@ -10,12 +10,7 @@ to learn kanji : if the word contains an unknown kanji
 
 import xlrd
 from utils import strip_kana, strip_special_chars
-
-class Kanji:
-
-    def __init__(self, kanji, status):
-        self.kanji = kanji
-        self.status = status
+from classes import Kanji, Word
 
 
 def has_unknown_kanji(word, unknown_kanji_list):
@@ -32,6 +27,10 @@ def has_unknown_kanji(word, unknown_kanji_list):
 
 
 if __name__ == '__main__':
+
+    ###########################################################################
+    # Determine unknown kanjis
+
     kanji_list = []
     workbook = xlrd.open_workbook('..\Kanji.xlsx')
     sheet = workbook.sheet_by_index(0)
@@ -39,12 +38,14 @@ if __name__ == '__main__':
     for row in range(1, sheet.nrows):
         kanji = sheet.cell_value(row, 1)
         status = sheet.cell_value(row, 4)
-        kanji_list.append(Kanji(kanji, status))
+        kanji_list.append(Kanji(kanji=kanji, status=status))
     
     workbook.release_resources()
 
     unknown_kanji_list = [k.kanji for k in kanji_list if k.status == 'unknown']
 
+    ###########################################################################
+    # Read Vocabulary.xlsx to determine which words has unknown kanji
     
     workbook = xlrd.open_workbook('..\Vocabulary.xlsx')
     sheet = workbook.sheet_by_index(0)
