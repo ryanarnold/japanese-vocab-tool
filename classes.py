@@ -1,6 +1,6 @@
 
 class Word(object):
-    def __init__(self, kana, kanji, english, category, status):
+    def __init__(self, kana='', kanji='', english='', category='', status=''):
         self.kana = kana
         self.kanji = kanji
         self.english = english
@@ -9,7 +9,7 @@ class Word(object):
 
 
 class Kanji(object):
-    def __init__(self, sequence, kanji, meaning, status):
+    def __init__(self, sequence='', kanji='', meaning='', status=''):
         self.sequence = sequence
         self.kanji = kanji
         self.meaning = meaning
