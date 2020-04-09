@@ -3,8 +3,9 @@ import xlrd
 from classes import Kanji
 
 HIRAGANA = '[あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをゃゅょぁぃぅぇぉっがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽん]'
-KATAKANA = '[アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン]'
-SPECIAL_CHARS = '[・ーヽヾ、。～々]'
+KATAKANA = '[アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン二]'
+SPECIAL_CHARS = '[（）？！Ｘ・ーヽヾ、。～々＋]'
+LATIN_CHARS = '[a-zA-ZＴ]'
 
 def strip_kana(japanese_string):
     japanese_string = re.sub(HIRAGANA, '', japanese_string)
@@ -14,6 +15,17 @@ def strip_kana(japanese_string):
 
 def strip_special_chars(japanese_string):
     return re.sub(SPECIAL_CHARS, '', japanese_string)
+
+
+def strip_latin_chars(japanese_string):
+    return re.sub(LATIN_CHARS, '', japanese_string)
+
+
+def kanji_only(japanese_string):
+    japanese_string = strip_kana(japanese_string)
+    japanese_string = strip_special_chars(japanese_string)
+    japanese_string = strip_latin_chars(japanese_string)
+    return japanese_string.strip()
 
 
 def load_kanji_list(filepath):
