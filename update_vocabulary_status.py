@@ -47,18 +47,23 @@ if __name__ == '__main__':
     ###########################################################################
     # Read Vocabulary.xlsx to determine which words has unknown kanji
     
+    word_list = []
     workbook = xlrd.open_workbook('..\Vocabulary.xlsx')
     sheet = workbook.sheet_by_index(0)
 
     with open('words_with_unknown_kanji.txt', 'w', encoding='utf-8') as output:
-        unknown_count = 0
         for row in range(1, sheet.nrows):
-            word = sheet.cell_value(row, 0)
+            word_kanji = sheet.cell_value(row, 0)
+
+            word = Word(kanji=word_kanji)
             
-            if has_unknown_kanji(word, unknown_kanji_list):
-                output.write(word + '\n')
-                unknown_count += 1
+            if has_unknown_kanji(word.kanji, unknown_kanji_list):
+                word.status = 'to learn kanji'
+            else:
+                word.status = 'ready to learn'
+            
+            word_list.append(word)
     
     workbook.release_resources()
 
-    print(f'{unknown_count} words has unknown kanji')
+    print(f"{len([w for w in word_list if w.status == 'to learn kanji'])} words has unknown kanji")
