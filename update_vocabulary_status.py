@@ -9,6 +9,7 @@ to learn kanji : if the word contains an unknown kanji
 '''
 
 import xlrd
+import openpyxl
 from utils import strip_kana, strip_special_chars
 from classes import Kanji, Word
 
@@ -66,4 +67,21 @@ if __name__ == '__main__':
     
     workbook.release_resources()
 
-    print(f"{len([w for w in word_list if w.status == 'to learn kanji'])} words has unknown kanji")
+    words_with_unknown_kanji = [w.kanji for w in word_list if w.status == 'to learn kanji']
+    print(f"{len(words_with_unknown_kanji)} words has unknown kanji")
+
+    ###########################################################################
+    # Update Vocabulary.xlsx
+
+    workbook = openpyxl.load_workbook(filename='..\Vocabulary.xlsx')
+    sheet = workbook.worksheets[0]
+
+    for row in range(2, sheet.max_row+1):
+        kanji = sheet['A' + str(row)].value
+        
+        if kanji in words_with_unknown_kanji:
+            sheet['E' + str(row)] = 'need to learn kanji'
+        else:
+            sheet['E' + str(row)] = 'ready to learn'
+
+    workbook.save(filename='..\Vocabulary.xlsx')
