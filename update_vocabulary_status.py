@@ -10,7 +10,7 @@ to learn kanji : if the word contains an unknown kanji
 
 import xlrd
 import openpyxl
-from utils import strip_kana, strip_special_chars
+from utils import strip_kana, strip_special_chars, load_kanji_list
 from classes import Kanji, Word
 
 
@@ -30,19 +30,9 @@ def has_unknown_kanji(word, unknown_kanji_list):
 if __name__ == '__main__':
 
     ###########################################################################
-    # Determine unknown kanjis
+    # Read Kanji.xlsx
 
-    kanji_list = []
-    workbook = xlrd.open_workbook('..\Kanji.xlsx')
-    sheet = workbook.sheet_by_index(0)
-
-    for row in range(1, sheet.nrows):
-        kanji = sheet.cell_value(row, 1)
-        status = sheet.cell_value(row, 4)
-        kanji_list.append(Kanji(kanji=kanji, status=status))
-    
-    workbook.release_resources()
-
+    kanji_list = load_kanji_list('..\Kanji.xlsx')
     unknown_kanji_list = [k.kanji for k in kanji_list if k.status == 'unknown']
 
     ###########################################################################

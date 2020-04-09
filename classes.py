@@ -9,8 +9,9 @@ class Word(object):
 
 
 class Kanji(object):
-    def __init__(self, sequence='', kanji='', meaning='', status=''):
-        self.sequence = sequence
+    def __init__(self, kklc_sequence='', freq_sequence='', kanji='', meaning='', status=''):
+        self.kklc_sequence = kklc_sequence
+        self.freq_sequence = freq_sequence
         self.kanji = kanji
         self.meaning = meaning
         self.status = status
